@@ -1,2 +1,2 @@
 # npdc-vessel
-Historic Vessel Archive
+Angular source code for https://data.npolar.no/vessel

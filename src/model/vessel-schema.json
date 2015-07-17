@@ -1,0 +1,123 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "http://api.npolar.no/schema/historic-vessel",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "_id": {
+            "type": "string"
+        },
+        "_rev": {
+            "type": "string"
+        },
+        "id": {
+            "type": "string"
+        },
+        "collection": {
+            "type": "string"
+        },
+        "workspace": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "owner": {
+            "type": "string"
+        },
+        "built_year": {
+            "id": "built_year",
+            "type": "integer"
+        },
+        "built_where": {
+            "type": "string"
+        },
+        
+        
+
+        
+        
+        "harbours": {
+			"type": "array",
+			"description": "",
+			"items": {
+				"type": "string"
+			}
+		}, "ports": {
+            "type": "string"
+        },
+        
+        
+        
+        "shipwrecked_year": {
+            "type": "integer"
+        },
+        "shipwrecked_location": {
+            "type": "string"
+        },
+        "caption": {
+            "type": "string"
+        },
+	"links": {
+      "description": "",
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rel": { "type": "string" },
+          "href": { "type": "string", "format": "uri" },
+          "title": { "type": ["string", "null"] },
+          "type": { "type": "string" }
+
+        },
+        "required": ["href"]
+      }}
+      ,"author": {
+      "description": "",
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "uri" }
+
+        },
+        "required": ["href"]
+      }},
+        "sources": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "history": {
+            "type": "string"
+        },
+        "created_by": {
+            "type": "string"
+        },
+        "created": {
+            "type": "string"
+        },
+        "alpha": {
+            "type": "string"
+        },
+        "updated": {
+            "type": "string"
+        },
+        "updated_by": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "id",
+        "name"
+    ]
+}

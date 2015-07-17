@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/vessel/"/>
+    <title>Historic Vessel Archive</title> 
+    <meta name="description" content="">
+
+    <script src="app.js"></script>
+ 
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/vesselApp.css">
+  </head>
+	
+  <body ng-app="vesselApp">		
+		<div id="layout">
+			
+			<div id="menu">
+				<div class="pure-menu">
+					<a class="pure-menu-heading" href="."><h1 class="logo">Historic <strong>Vessel Archive</strong></h1></a>							
+				</div>
+			</div>
+	
+			<div id="main">
+				<!--<div class="header">
+					<h2>A subtitle for your page goes here</h2>
+				</div>-->
+					<div class="content" npolar-login-logout></div>
+					<div class="content" ng-view ng-cloak>
+					</div>
+			</div>
+			
+		<footer class="content">
+			<p>The <a href="./">Historic Vessel Archive</a> (<a href="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">metadata</a>) is created and maintained by <a href="mailto:
+kkjaer@online.no">Kjell-G. Kjær</a></p> 
+		</footer>
+			
+		</div>
+		
+
+  </body>
+</html>

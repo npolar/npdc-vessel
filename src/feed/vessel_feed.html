@@ -1,0 +1,53 @@
+        
+	<div class="content">
+		<aside class="content-related">
+      
+     
+       
+<!--<nav>
+  <h5><a href="/">datacentre</a> | <a href="/vessel">vessels</a> <span ng-if="user.username">[{{user.name||user.username}}]</span> <span ng-if="!user.username"> [<a href="#
+  login">login</a>]</span></h5>
+</nav>-->
+
+    </aside>
+			
+		<article class="content-main">
+
+ <a ng-show="isAuthenticated()" ng-href="__new" class="pure-menu-link"> <button type="button" ng-click="newData = !newData" class="btn btn-primary">new</button></a>
+                
+<form action="">
+<input type="search" name="q" value="{{feed.search.q}}" size="80" placeholder="Search" autocomplete="on"><input type="submit" value=" Søk ">
+</form>
+
+<h2 ng-if="error" class="alert alert-danger" role="alert"><strong>{{error.status}} {{error.statusText}}</strong> {{error.data}}</h2>
+
+<div>
+  <span ng-if="feed.opensearch.totalResults > 0">{{feed.opensearch.totalResults}} results</span>
+  <span ng-if="feed.opensearch.totalResults == 0">No results</span>
+  <span ng-if="!feed.entries">Fetching data from {{base}}</span>
+  
+  <span ng-repeat="link in feed.links">
+    <!-- @todo
+    Inject function into Npolar resource that will loop links and switch API base with app base 
+    -->
+    <a ng-href="{{link.href}}" ng-if="link.rel == 'next' && link.href != false"> {{link.rel}}</a>
+  </span>
+</div>
+<h3><span ng-if="filters.length">Filters: {{filters | json}}</span><span ng-if="filters.length"><a ng-href="/vessel">Remove filters</a></span></h3>
+
+<p ng-if="error">{{error.config.url}} status {{error.status}} {{error.statusText}}</p>
+
+<div ng-repeat="e in feed.entries">
+
+<!--<h5 class="email-name">{{e.type}}</h5>-->
+    <h5><a ng-href="{{e.id | a }}">{{e.name}}</a></h5>
+    <!--<p>{{e.harbours.join(", ")}}</p>
+    <p class="email-desc"><span><a ng-if="e.built_year > 1000" ng-href="?q=&filter-built_year={{e.built_year}}">{{e.built_year+ " −"}}</a><a ng-href="?q=&filter-shipwrecked_year={{e.shipwrecked_year}}">{{e.shipwrecked_year}}</a></span>
+    </p>-->
+
+</div>
+    </article>
+  </div>
+
+
+

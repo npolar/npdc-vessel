@@ -8,7 +8,7 @@ require('angular-npolar');
 
 window.tv4 = require('tv4'); // Formula dependency, TODO move to formula and don't use globals...
 require('formula');
-var AutoConfig = require('npdc-common').autoConf;
+var AutoConfig = require('npdc-common').AutoConfig;
 
 // Create "vesselApp" (angular module) and declare its dependencies
 var app = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npolarUi', 'templates']);

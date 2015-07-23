@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/npolar/npdc-vessel",
   "author": "npolar",
   "license": "MIT",
+  "private": true,
   "dependencies": {
     "angular": "^1.4.3",
     "angular-npolar": "git://github.com/npolar/angular-npolar.git",

@@ -6,72 +6,76 @@ var _ = require('lodash');
  * @ngInject
  */
 var VesselController = function($controller, $rootScope, $scope, $route, $routeParams, $location, NpolarApiSecurity, NpolarApiText, Placename, Editlog, Vessel) {
-   
+     
   $controller('NpolarEditController', { $scope: $scope });
   $scope.resource = Vessel;
    
-   // Init formula
-   $scope.formula = {
-      form: "document/vessel-formula.json",
-      schema: "model/vessel-schema.json",
-      template: "bootstrap3",
-      //FormulaResource(HistoricVessel)
-      //resource:Vessel,
-      onsave: function(model) {
-         
-         $scope.document = model;   
-         $scope.save();
+  // Init formula
+  $scope.formula = Object.assign($scope.formula);
+  $scope.formula.schema = "//api.npolar.no/schema/historic-vessel";
+  $scope.formula.form = "document/vessel-formula.json";
+  $scope.formula.template = "default";
+  
+  $scope.formula.validateHidden = true;
+  $scope.formula.saveHidden = true;
+  
+  $scope.formula.onsave = function(model) {
+     $scope.document = model;   
+     $scope.save();
+     $route.reload();
+  };
+  
+  $scope.$watch('vessel', function() {
+    $scope.document = $scope.vessel;
+  });
+  
+  console.log("2", $scope.formula);  
+  
+  $scope.fetch = function() {
+      
+    // Fetch vessel
+    $scope.vessel = Vessel.fetch($routeParams, function(vessel) {
+   
+    // Inject vessel model into formula
+    $scope.formula.model = vessel;
+    
+    // Detect ships mentioned in vessel history
+    $scope.mentions = Vessel.mentions(vessel.history);
+    
+    $scope.years = Vessel.years(vessel);
+    
+    // Fetch edits
+    Editlog.feed({q: null, "q-response.body": vessel.id, sort: "-request.time", "filter-endpoint": "/vessel" }, function(response) {
+      $scope.edits = response.feed.entries;
+    });
+    
+    // Fetch and simplify facets (for suggestions)
+    var facets = ["built_where", "type"];
+    Vessel.feed({q: "", limit: 0, "size-facet": 10, facets: facets.join(",") }, function(response) {
+       angular.forEach(facets, function(facet) {
+          var nested = _.select(response.feed.facets, function(f) {
+             return angular.isDefined(f[facet]);
+          });           
+          $scope[facet] = nested[0][facet];
+       });
+    });
 
- 
-      }
-   };
-   
-   
-   $scope.fetch = function() {
+    // Fetch mentions by others by searching for name
+    Vessel.feed({q: vessel.name, limit: 50, facets: false, "not-id": vessel.id }, function(response) {
       
-      //$rootScope.$broadcast('handle-broadcast', { any: {} });
-   
-      // Fetch vessel
-      $scope.vessel = Vessel.fetch($routeParams, function(vessel) {
-		 
-      // Inject vessel model into formula
-      $scope.formula.model = vessel;
+      console.log("candidates for mentioned by:", response.feed.opensearch.totalResults);
       
-      // Detect ships mentioned in vessel history
-      $scope.mentions =Vessel.mentions(vessel.history);
-      //console.log(HistoricVessel.mentions(vessel.sources));
-      //$scope.mentions = _.without(mentions,Vessel.mentions(vessel.sources));
-      
-      $scope.years = Vessel.years(vessel);
-      
-      // Fetch related (by vessel's name) placenames
-      //Placename.feed({q: vessel.name, limit:10}, function(response) {
-      //  $scope.placenames = response.feed.entries;
-      //});
-      
-      // Fetch edits
-      Editlog.feed({q: null, "q-response.body": vessel.id, sort: "-request.time", "filter-endpoint": "/historic/vessel" }, function(response) {
-        $scope.edits = response.feed.entries;
+      $scope.mentioned = _.select(response.feed.entries, function(v) {
+        var text = v.history; //JSON.stringify(v);
+        var found = new RegExp(vessel.name, "i").test(text);
+        return found;
+        
       });
+      console.log("mentioned", $scope.mentioned);
       
-      // Fetch and simplify facets (for suggestions)
-      var facets = ["built_where", "type"];
-     Vessel.feed({q: "", limit: 0, "size-facet": 10, facets: facets.join(",") }, function(response) {
-         angular.forEach(facets, function(facet) {
-            var nested = _.select(response.feed.facets, function(f) {
-               return angular.isDefined(f[facet]);
-            });           
-            $scope[facet] = nested[0][facet];
-         });
-      });
-
-      // Fetch mentions by searching for name
-     Vessel.feed({q: vessel.name, limit: 10, facets: false, "not-id": vessel.id }, function(response) {
-        $scope.mentioned = response.feed.entries;
-      }); 
-   },
-   
-   function(response) {
+    }); 
+  },
+  function(response) {
       if (404 === response.status) {
         Vessel.array({"q": $routeParams.id, limit: 50, fields: "id,name,harbours,owner,built_year,built_where" }, function(response) {
             var m =_.select(response, { name: $routeParams.id.toUpperCase() });
@@ -106,23 +110,20 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
       }
    });
    
-   }; // end fetch
+  }; // end fetch
    
    
-   if ($routeParams.id === "__new") {
-      $scope.editAction = true;
-      var vessel = Vessel.create();
-      $scope.vessel = vessel;
-      $scope.formula.model = vessel;
+  if ($routeParams.id === "__new") {
+    $scope.editAction = true;
+    var vessel = Vessel.create();
+    $scope.vessel = vessel;
+    $scope.formula.model = vessel;
       
       
-   } else {
-      $scope.fetch();
-      $scope.editAction = false;
-   }
-   
-   
-   
+  } else {
+    $scope.fetch();
+    $scope.editAction = false;
+  }
    
 };
 

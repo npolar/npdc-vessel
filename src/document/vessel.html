@@ -1,46 +1,28 @@
-<!--<div ng-include="'/_shared/html/_nav.html'">
-   
-  </div>
-        
-	<div class="content">
-		<aside class="content-related">
-       
-      
-        back to: <a href="/vessel">vessels</a>
-        
-        -->
-        <!--<nav>
-  <h5><a href="/">datacentre</a> | <a href="/vessel">vessels</a> <span ng-if="user.username">[{{user.name||user.username}}]</span> <span ng-if="!user.username"> [<a href="#
-  login">login</a>]</span></h5>
-</nav>-->
 
-    <!--</aside>-->
-			
-		<article class="content-main">
-
-
-
-<h2 ng-if="error" class="alert alert-danger" role="alert"><strong>{{error.status}} {{error.statusText}}</strong> {{error.data}}</h2>
-
-<div ng-if="vessels" ng-repeat="vessel in vessels">
-  <a href="{{vessel.id|a}}">{{vessel.name}}</a> {{vessel | json}}
+<div ng-if="vessels" ng-repeat="vessel in vessels" layout-padding>
+  <a href="{{vessel.id|a}}">{{vessel.name}} </a> {{vessel | json}}
 </div>
 
+<article ng-if="!vessels" class="content-main" layout-padding>
 
-<h2 ng-show="vessel.id">{{vessel.name}}
+
+
+
+<h2 ng-show="vessel.id">{{vessel.name}}</h2>
+<!--<npdc-edit-button></npdc-edit-button>-->
 <div>
-  <button ng-show="isAuthenticated()" type="button" ng-show="true" ng-click="editAction = !editAction; action='edit'" ng-class='{ btn: true, "btn-primary": editAction, "btn-danger": ! editAction }'>{{ editAction ? "view" : "edit" }}</button>
-  <button type="button" ng-show="false" ng-click="vessel.update(vessel)" class="btn btn-success"><strong>save</strong></button>  
-</div>
-</h2>
-
-<div ng-show="vessel.id">
-  <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name }}</a> | </span></p>
+  <button ng-show="security.isAuthorized('update', resource.path)" type="button" ng-show="true" ng-click="editAction = !editAction; action='edit'" ng-class='{ btn: true, "btn-primary": editAction, "btn-danger": ! editAction }'>{{ editAction ? "view" : "edit" }}</button>
+  <!--<button type="button" ng-show="security.isAuthenticated()" ng-click="vessel.$update(vessel)" class="btn btn-success"><strong>save</strong></button> --> 
 </div>
 
 <div ng-show="!editAction && vessel.id">
   
   <p><a ng-href="{{'?filter-type=' + vessel.type | a }}">{{vessel.type}}</a> from <a ng-href="{{'?filter-built_where=' + vessel.built_where | a }}">{{vessel.built_where || "unkown builder"}}</a>, built in <a ng-href="?filter-built_year={{vessel.built_year}}">{{vessel.built_year || "unkown year"}}</a>.</p>
+  
+  <div ng-show="vessel.id">
+    <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name }}</a> | </span></p>
+  </div>
+
   
   <div>
     <p>Mentions: <span ng-repeat="v in mentions"><a ng-href="{{v.name}}">{{v.name}}</a> | </span></p>
@@ -57,6 +39,9 @@
   <h3>Owners</h3>
   <p>Owned by <a ng-href="?q={{vessel.owner}}">{{vessel.owner}}</a>.</p>
   
+  <h3>Registration code</h3>
+  <p>{{ vessel.registration_code }}</p>
+  
   <h3>Harbours</h3>
   <p>{{vessel.harbours.join(", ")}}.</p>
     
@@ -72,39 +57,22 @@
 <div ng-show="editAction">
   
   <div formula="formula"></div>
-  
-  <!--<div ng-if="type.length">
-    <b>Types</b>
-    <span ng-repeat="f in type">
-      <ng-repeat="term in f">
-      <a href="" ng-click="vessel.type = f.term">{{f.term}}</a> |
-      </ng-repeat>
-    </ul>
-  </div>
-  
-  <div ng-if="built_where.length">
-    <b>Built where?</b>
-    <span ng-repeat="f in built_where">
-      <ng-repeat="term in f">
-      <a href="" ng-click="built_where.type = f.term">{{f.term}}</a> |
-      </ng-repeat>
-    </ul>
-  </div>-->
-
+  <npdc:save-button></npdc:save-button>
+  <npdc:delete-button></npdc:delete-button>
 </div>
 
-<div ng-show="placenames.length">
+<!--<div ng-show="placenames.length">
   <h3>Placenames</h3>
   <span ng-repeat="p in placenames">
     <a ng-href="http://placenames.npolar.no/stadnamn/{{p.title_link}}?ident={{p.ident}}">{{p.title}}</a> |
   </span>
-</div>
+</div>-->
 
 <div ng-show="vessel._rev">
 <h3>Metadata</h3>
 <dl>
-<!--<dt>URI</dt>
-<dd>https://data.npolar.no/vessel/{{vessel.id}}?rev={{vessel._rev}}</dd>-->
+<dt>Edit URI (JSON)</dt>
+<dd>https:{{base}}/vessel/{{vessel.id}}?rev={{vessel._rev}}</dd>
 <dt>Author</dt>
 <dd>{{vessel.created_by}}</dd>
 <dt>Created</dt>
@@ -116,4 +84,5 @@
 
 
 </article>
+
 	

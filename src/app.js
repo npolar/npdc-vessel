@@ -5,17 +5,20 @@ var angular = require('angular');
 
 require('angular-route');
 require('angular-npolar');
+//require('npdc-material');
+var npdcCommon = require('npdc-common');
 
-window.tv4 = require('tv4'); // Formula dependency, TODO move to formula and don't use globals...
+//  window.tv4 = require('tv4'); // Formula dependency, TODO move to formula and don't use globals...
 require('formula');
-var AutoConfig = require('npdc-common').AutoConfig;
+var AutoConfig = npdcCommon.AutoConfig;
 
 // Create "vesselApp" (angular module) and declare its dependencies
-var app = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npolarUi', 'templates']);
+var app = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npolarUi', 'npdcUi', 'templates']);
 
 app.controller('VesselController', require('./document/vessel_controller'));
 app.controller('VesselFeedController', require('./feed/vessel_feed_controller'));
 app.factory('Vessel', require('./model/vessel'));
+app.factory('Editlog', require('./model/editlog'));
 
 // Bootstrap ngResource models using NpolarApiResource
 //
@@ -26,7 +29,7 @@ app.factory('Vessel', require('./model/vessel'));
 // * Placename -> ngResource
 var resources = [
   {"path": "/vessel", "resource": "VesselResource" },
-  {"path": "/editlog", "resource": "Editlog"},
+  {"path": "/editlog", "resource": "EditlogResource"},
   {"path": "/placename", base: "//api.npolar.no", "resource": "Placename", fields: "*"}
 ];
 resources.forEach(function (service) {
@@ -75,12 +78,12 @@ app.directive("p", function() {
 
 // Auth interceptor
 angular.module("vesselApp").config(function($httpProvider) {
-   $httpProvider.interceptors.push("npolarApiAuthInterceptor");
+  $httpProvider.interceptors.push("npolarApiInterceptor");
 });
 
 // Inject npolarApiConfig and run
 app.run(function(npolarApiConfig) {
-  var environment = "test"; // development | test | production
+  var environment = "production"; // development | test | production
   var autoconfig = new AutoConfig(environment);
   angular.extend(npolarApiConfig, autoconfig);
   console.log("npolarApiConfig", npolarApiConfig);

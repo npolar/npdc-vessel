@@ -35,14 +35,11 @@
         
       ]
     },
-    
-    
-  
-    
     {
       "title": "Owners",
+      
       "fields": [
-        "owner"
+        "owner", "registration_code"
       ]
     },
     {
@@ -51,14 +48,6 @@
         {
           "id": "sources",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "title": "Links",
-      "fields": [
-        {
-          "id": "links"
         }
       ]
     },

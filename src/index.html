@@ -6,40 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="/vessel/"/>
     <title>Historic Vessel Archive</title>
-    <meta name="description" content="">
+    <meta name="description" content="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">
 
-    <script src="app.js"></script>
-
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="css/vesselApp.css">
-    <script>var VERSION = '<!-- @echo VERSION -->'; console.log("Running version:", VERSION)</script>
+		<link rel="icon" href="https://data.npolar.no/favicon.ico" type="image/x-icon" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		
+		<link href="https://rawgit.com/npolar/formula/master/src/formula.css" rel="stylesheet">
+		<link href="https://app2.data.npolar.no/assets/npdc-common-master-latest.css" rel="stylesheet">
+		
+    <script>var VERSION = '<!-- @echo VERSION -->'; console.log("npdc-vessel version", VERSION)</script>
+		
+		<script src="app.js"></script>
+		
   </head>
 
-  <body ng-app="vesselApp">
-		<div id="layout">
-
-			<div id="menu">
-				<div class="pure-menu">
-					<a class="pure-menu-heading" href="."><h1 class="logo">Historic <strong>Vessel Archive</strong></h1></a>
-				</div>
-			</div>
-
-			<div id="main">
-				<!--<div class="header">
-					<h2>A subtitle for your page goes here</h2>
-				</div>-->
-					<div class="content" npolar-login-logout></div>
-					<div class="content" ng-view ng-cloak>
-					</div>
-			</div>
-
-		<footer class="content">
-			<p>The <a href="./">Historic Vessel Archive</a> (<a href="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">metadata</a>) is created and maintained by <a href="mailto:
+  <body ng-app="vesselApp" ng-cloak>
+		<npdc:top></npdc:top>
+		
+		<div ng-view ></div>
+		
+		<footer class="content" layout-padding>
+			<p>The <b>Historic Vessel Archive</b> (<a href="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">metadata</a>) is created and maintained by <a href="mailto:
 kkjaer@online.no">Kjell-G. Kjær</a></p>
 		</footer>
-
-		</div>
-
+		
+		<!--<npdc:bottom></npdc:bottom>-->
 
   </body>
 </html>

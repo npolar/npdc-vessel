@@ -21,7 +21,7 @@ var routes = function($routeProvider, $locationProvider) {
     templateUrl: "document/vessel.html",
     controller: "VesselController"
   }).when('/', {
-    templateUrl: "feed/vessel_feed.html",
+    template: "<npdc:search></npdc:search>",
     controller: "VesselFeedController"
   });
   

@@ -23,7 +23,8 @@ var Vessel = function(VesselResource, NpolarApiText) {
         
       // Reject non-uppercase and other often used quo  ted phrases
       // "Tromsø " => Tromsø Stidtstidende|Tromsø Stiftsidende|Tromsø Stiftstidende|Tromsø Skibsverft
-      var reject = /^([\d+\.\s\:]|Fra |Av |Den |Norsk |Norske |Norges |Polar Record|Norsk Fiskeritidende|The |Norsk Fiskereitidende|Tromsø |Tromsøposten|Fra Ishavet|Svalbard var min verden)/;
+      // Skibet/Skipet
+      var reject = /^([\d+\.\s\:]|Fra |Av |Den |Norsk |Norske |Norges |Polar Record|Norsk Fiskeritidende|The |Norsk Fiskereitidende|Tromsø |Tromsøposten|Fra Ishavet|Svalbard var min verden|Ski[bp]et)/;
       
       // Reject anything not starting with a Capital, or any match over 40 characters
       matches = _.reject(matches, function(m) {

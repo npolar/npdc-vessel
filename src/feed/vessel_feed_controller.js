@@ -3,30 +3,20 @@
 /**
  * @ngInject
  */
-var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel) {
-   
- $controller('NpolarBaseController', { $scope: $scope });
-
-  var params = $location.search();
-  $scope.base = npolarApiConfig.base;
-   
+var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel, Editlog, $q) {
   
+  $controller('NpolarBaseController', { $scope: $scope });
+  $scope.resource = Vessel;
   
-  Vessel.feed(params, function(response) {
-   
-   
-   console.log("isAuthenticated", $scope.isAuthenticated());
-      
-      $scope.filters = response._filters();
-      $scope.feed = response.feed;
-      
-   }, function(error) {
-      if (error.status) {
-         $scope.error = error;
-      } else {
-         // @todo Send 500
-         $scope.error = { status: 500, statusText: "Data API error", data: "Please inform data@npolar.no if this problem persists" };
-      }
+  let param = Object.assign({ facets: "harbours,built_where,shipwrecked_location",  "rangefacet-built_year": 50,  "rangefacet-shipwrecked_year": 50, "size-facet": 10 }, $location.search());
+  
+  if (!param.q) {
+    param.sort = "-updated";
+  }
+  
+  Vessel.feed(param, response => {
+    $scope.filters = response._filters();
+    $scope.feed = response.feed;
    });
 };
 

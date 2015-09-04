@@ -1,14 +1,11 @@
 "use strict";
 
 var angular = require('angular');
-//var _ = require('lodash');
 
 require('angular-route');
 require('angular-npolar');
-//require('npdc-material');
-var npdcCommon = require('npdc-common');
 
-//  window.tv4 = require('tv4'); // Formula dependency, TODO move to formula and don't use globals...
+var npdcCommon = require('npdc-common');
 require('formula');
 var AutoConfig = npdcCommon.AutoConfig;
 

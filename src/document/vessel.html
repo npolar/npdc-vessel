@@ -12,50 +12,50 @@
 <!--<npdc-edit-button></npdc-edit-button>-->
 <div>
   <button ng-show="security.isAuthorized('update', resource.path)" type="button" ng-show="true" ng-click="editAction = !editAction; action='edit'" ng-class='{ btn: true, "btn-primary": editAction, "btn-danger": ! editAction }'>{{ editAction ? "view" : "edit" }}</button>
-  <!--<button type="button" ng-show="security.isAuthenticated()" ng-click="vessel.$update(vessel)" class="btn btn-success"><strong>save</strong></button> --> 
+  <!--<button type="button" ng-show="security.isAuthenticated()" ng-click="vessel.$update(vessel)" class="btn btn-success"><strong>save</strong></button> -->
 </div>
 
-<div ng-show="!editAction && vessel.id">
-  
+<div ng-if="!editAction && vessel.id">
+
   <p><a ng-href="{{'?filter-type=' + vessel.type | a }}">{{vessel.type}}</a> from <a ng-href="{{'?filter-built_where=' + vessel.built_where | a }}">{{vessel.built_where || "unkown builder"}}</a>, built in <a ng-href="?filter-built_year={{vessel.built_year}}">{{vessel.built_year || "unkown year"}}</a>.</p>
-  
+
   <div ng-show="vessel.id">
     <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name }}</a> | </span></p>
   </div>
 
-  
+
   <div>
     <p>Mentions: <span ng-repeat="v in mentions"><a ng-href="{{v.name}}">{{v.name}}</a> | </span></p>
   </div>
-  
+
   <div>
     <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{y}}</a> | </span></p>
   </div>
-    
+
   <h3>History</h3>
   <p>{{vessel.history}}
   <p ng-if = "vessel.shipwrecked_year">{{vessel.shipwrecked_year}}: Shipwrecked. Location: {{vessel.shipwrecked_location}}.</p>
 
   <h3>Owners</h3>
   <p>Owned by <a ng-href="?q={{vessel.owner}}">{{vessel.owner}}</a>.</p>
-  
+
   <h3>Registration code</h3>
   <p>{{ vessel.registration_code }}</p>
-  
+
   <h3>Harbours</h3>
   <p>{{vessel.harbours.join(", ")}}.</p>
-    
+
   <h3>Description</h3>
   <p>{{vessel.description}}</p>
-  
+
   <h3>Sources</h3>
   <p style="white-space: pre;">{{vessel.sources}}</p>
   <p>{{vessel.caption}}</p>
-  
+
 </div>
 
-<div ng-show="editAction">
-  
+<div ng-if="editAction">
+
   <div formula="formula"></div>
   <npdc:save-button></npdc:save-button>
   <npdc:delete-button></npdc:delete-button>
@@ -84,5 +84,3 @@
 
 
 </article>
-
-	

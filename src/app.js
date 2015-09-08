@@ -54,14 +54,14 @@ app.config(require('./routes'));
 
 // Directives
 // Set default textarea rows
-app.directive("textarea", function() {
-  return {
-    restrict: "E",
-    controller: function($element) {
-      $element.attr("rows", 15);
-    }
-  };
-});
+// app.directive("textarea", function() {
+//   return {
+//     restrict: "E",
+//     controller: function($element) {
+//       $element.attr("rows", 15);
+//     }
+//   };
+// });
 
 // Preserve newlines in text paragraphs
 app.directive("p", function() {

@@ -15,7 +15,7 @@ var app = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npola
 app.controller('VesselController', require('./document/vessel_controller'));
 app.controller('VesselFeedController', require('./feed/vessel_feed_controller'));
 app.factory('Vessel', require('./model/vessel'));
-app.factory('Editlog', require('./model/editlog'));
+//app.factory('Editlog', require('./model/editlog'));
 
 // Bootstrap ngResource models using NpolarApiResource
 //

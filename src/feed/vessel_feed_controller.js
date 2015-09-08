@@ -3,7 +3,7 @@
 /**
  * @ngInject
  */
-var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel, Editlog, $q) {
+var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel) {
   
   $controller('NpolarBaseController', { $scope: $scope });
   $scope.resource = Vessel;

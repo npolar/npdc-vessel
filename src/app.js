@@ -26,7 +26,7 @@ app.factory('Editlog', require('./model/editlog'));
 // * Placename -> ngResource
 var resources = [
   {"path": "/vessel", "resource": "VesselResource" },
-  {"path": "/editlog", "resource": "EditlogResource"},
+  //{"path": "/editlog", "resource": "EditlogResource"},
   {"path": "/placename", base: "//api.npolar.no", "resource": "Placename", fields: "*"}
 ];
 resources.forEach(function (service) {

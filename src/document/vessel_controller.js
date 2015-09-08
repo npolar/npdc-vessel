@@ -14,7 +14,7 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
   $scope.formula = Object.assign($scope.formula);
   $scope.formula.schema = "//api.npolar.no/schema/historic-vessel";
   $scope.formula.form = "document/vessel-formula.json";
-  $scope.formula.template = "default";
+  $scope.formula.template = "material";
   
   $scope.formula.validateHidden = true;
   $scope.formula.saveHidden = true;
@@ -45,9 +45,9 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
     $scope.years = Vessel.years(vessel);
     
     // Fetch edits
-    Editlog.feed({q: null, "q-response.body": vessel.id, sort: "-request.time", "filter-endpoint": "/vessel" }, function(response) {
-      $scope.edits = response.feed.entries;
-    });
+    //Editlog.feed({q: null, "q-response.body": vessel.id, sort: "-request.time", "filter-endpoint": "/vessel" }, function(response) {
+    //  $scope.edits = response.feed.entries;
+    //});
     
     // Fetch and simplify facets (for suggestions)
     var facets = ["built_where", "type"];

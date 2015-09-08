@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * @ngInject
  */
-var VesselController = function($controller, $rootScope, $scope, $route, $routeParams, $location, NpolarApiSecurity, NpolarApiText, Placename, Editlog, Vessel) {
+var VesselController = function($controller, $rootScope, $scope, $route, $routeParams, $location, NpolarApiSecurity, NpolarApiText, Placename, Vessel) {
      
   $controller('NpolarEditController', { $scope: $scope });
   $scope.resource = Vessel;

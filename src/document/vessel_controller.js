@@ -5,14 +5,14 @@ var _ = require('lodash');
 /**
  * @ngInject
  */
-var VesselController = function($controller, $rootScope, $scope, $route, $routeParams, $location, NpolarApiSecurity, NpolarApiText, Placename, Vessel) {
+var VesselController = function($controller, $rootScope, $scope, $route, $routeParams, $log, $location, $sce, npolarApiConfig, NpolarApiSecurity, NpolarApiText, Placename, Vessel) {
      
   $controller('NpolarEditController', { $scope: $scope });
   $scope.resource = Vessel;
    
   // Init formula
   $scope.formula = Object.assign($scope.formula);
-  $scope.formula.schema = "//api.npolar.no/schema/historic-vessel";
+  $scope.formula.schema = `${npolarApiConfig.base}/schema/vessel-1`;
   $scope.formula.form = "document/vessel-formula.json";
   $scope.formula.template = "material";
   
@@ -24,14 +24,32 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
      $scope.save();
      $route.reload();
   };
-  
+
+  // Provide a document for NpolarEditController's save/delete
   $scope.$watch('vessel', function() {
     $scope.document = $scope.vessel;
   });
   
-  console.log("2", $scope.formula);  
+  let linkify = function(vessel, prop) {
+
+    let text = vessel[prop];
+    let mentions = Vessel.mentions(vessel[prop]);
+      
+    mentions.forEach(m => {
+      if (m.name.toUpperCase() === vessel.name.toUpperCase()) {
+        text = text.split(`\"${m.name}\"`).join(`<em>${m.name}</em>`);
+      } else {
+        $log.debug(m);
+        text = text.replace(`\"${m.name}\"`, `<a href="?q=${m.id || m.name }">${m.name}</a>`);
+      }
+      
+    });
+    
+    return text;
+  };
   
-  $scope.fetch = function() {
+  
+  let fetch = function() {
       
     // Fetch vessel
     $scope.vessel = Vessel.fetch($routeParams, function(vessel) {
@@ -40,7 +58,9 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
     $scope.formula.model = vessel;
     
     // Detect ships mentioned in vessel history
-    $scope.mentions = Vessel.mentions(vessel.history);
+    //$scope.mentions = Vessel.mentions(vessel.history);
+    
+    $scope.history = $sce.trustAsHtml(linkify(vessel, 'history'));
     
     $scope.years = Vessel.years(vessel);
     
@@ -121,7 +141,7 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
       
       
   } else {
-    $scope.fetch();
+    fetch();
     $scope.editAction = false;
   }
    

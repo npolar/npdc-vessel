@@ -33,15 +33,21 @@
   </div>
 
   <h3>History</h3>
-  <p>{{vessel.history}}
+  <p ng-bind-html="history"></p>
+  
   <p ng-if = "vessel.shipwrecked_year">{{vessel.shipwrecked_year}}: Shipwrecked. Location: {{vessel.shipwrecked_location}}.</p>
 
   <h3>Owners</h3>
-  <p>Owned by <a ng-href="?q={{vessel.owner}}">{{vessel.owner}}</a>.</p>
+  <ul ng-repeat="owner in vessel.owners">
+    <li>{{ owner.from }} <a ng-href="?q={{owner.name}}">{{ owner.name}}</a>, <a ng-href="?q={{owner.location}}">{{ owner.location }}</a></li>
+  </ul>
 
-  <h3>Registration code</h3>
-  <p>{{ vessel.registration_code }}</p>
-
+  <h3>Registrations</h3>
+  <div ng-repeat="r in vessel.registrations">
+    <dt>{{ r.registered }}</dt>
+    <dd>{{ r.code}}</dd>
+  </div>
+  
   <h3>Harbours</h3>
   <p>{{vessel.harbours.join(", ")}}.</p>
 

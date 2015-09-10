@@ -39,7 +39,7 @@
       "title": "Owners",
       
       "fields": [
-        "owner", "registration_code"
+        "owners", "registrations"
       ]
     },
     {

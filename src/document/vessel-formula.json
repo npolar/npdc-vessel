@@ -48,19 +48,19 @@
         {
           "id": "sources",
           "type": "textarea"
-        }
-      ]
-    },
-    {
-      "title": "Caption",
-      "fields": [
+        },
         {
           "id": "caption",
           "type": "textarea"
         }
       ]
+    },
+    {
+      "title": "Links",
+      "fields": [
+        "links"
+      ]
     }
-    
     
   ]
 }

@@ -5,9 +5,6 @@
 
 <article ng-if="!vessels" class="content-main" layout-padding>
 
-
-
-
 <h2 ng-show="vessel.id">{{vessel.name}}</h2>
 <!--<npdc-edit-button></npdc-edit-button>-->
 <div>
@@ -23,19 +20,23 @@
     <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name }}</a> | </span></p>
   </div>
 
-
-  <div>
-    <p>Mentions: <span ng-repeat="v in mentions"><a ng-href="{{v.name}}">{{v.name}}</a> | </span></p>
-  </div>
-
   <div>
     <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{y}}</a> | </span></p>
   </div>
+  
+  <section ng-if="vessel.links.length > 0">
 
   <h3>History</h3>
   <p ng-bind-html="history"></p>
   
   <p ng-if = "vessel.shipwrecked_year">{{vessel.shipwrecked_year}}: Shipwrecked. Location: {{vessel.shipwrecked_location}}.</p>
+  
+  <h3>Links</h3>
+  <ul ng-repeat="link in vessel.links">
+    <li><a ng-href="{{link.href}}">{{ link.title || link.href }}</a></li>
+  </ul>
+  </section>
+
 
   <h3>Owners</h3>
   <ul ng-repeat="owner in vessel.owners">
@@ -56,8 +57,10 @@
 
   <h3>Sources</h3>
   <p style="white-space: pre;">{{vessel.sources}}</p>
+  
+  <h3>Caption</h3>
   <p>{{vessel.caption}}</p>
-
+    
 </div>
 
 <div ng-if="editAction">

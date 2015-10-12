@@ -11,19 +11,15 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
   $scope.resource = Vessel;
    
   // Init formula
-  $scope.formula = Object.assign($scope.formula);
+  
+  //$scope.formula.schema =  "model/vessel-1.json";
   $scope.formula.schema = `${npolarApiConfig.base}/schema/vessel-1`;
+  
   $scope.formula.form = "document/vessel-formula.json";
   $scope.formula.template = "material";
-  
   $scope.formula.validateHidden = true;
   $scope.formula.saveHidden = true;
-  
-  $scope.formula.onsave = function(model) {
-     $scope.document = model;   
-     $scope.save();
-     $route.reload();
-  };
+
 
   // Provide a document for NpolarEditController's save/delete
   $scope.$watch('vessel', function() {
@@ -37,10 +33,14 @@ var VesselController = function($controller, $rootScope, $scope, $route, $routeP
       
     mentions.forEach(m => {
       if (m.name.toUpperCase() === vessel.name.toUpperCase()) {
-        text = text.split(`\"${m.name}\"`).join(`<em>${m.name}</em>`);
+       
+        text = text.replace(`\"${m.name}\"`, `<b>${m.name}</b>`);
+                             // Italics for all occurences of this vessel
+        text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
       } else {
-        $log.debug(m);
-        text = text.replace(`\"${m.name}\"`, `<a href="?q=${m.id || m.name }">${m.name}</a>`);
+        // Links for the first occurence of a ship, italics for the rest
+        text = text.replace(`\"${m.name}\"`, `<a href="?q=${m.id || m.name }"><b>${m.name}</b></a>`);
+        text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
       }
       
     });

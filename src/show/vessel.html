@@ -6,19 +6,17 @@
     <a href="{{vessel.id|a}}">{{vessel.name}} </a> {{vessel | json}}
   </div>
 
-  <article ng-if="!vessels" class="content-main" >
-
-    <h2 ng-show="vessel.id">{{vessel.name}}</h2>
+  <article ng-if="!vessels">
 
     <div ng-if="vessel.id">
 
       <p><a ng-href="{{'?filter-type=' + vessel.type | a }}">{{vessel.type}}</a> from <a ng-href="{{'?filter-built_where=' + vessel.built_where | a }}">{{vessel.built_where || "unkown builder"}}</a>, built in <a ng-href="?filter-built_year={{vessel.built_year}}">{{vessel.built_year || "unkown year"}}</a>.</p>
 
-      <div ng-show="vessel.id">
-        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name}}</a> | </span></p>
-      </div>
+      <h3>References</h3>
+      <md-divider></md-divider>
 
-      <div>
+      <div ng-show="vessel.id" layout-padding>
+        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name}}</a> | </span></p>
         <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{y}}</a> | </span></p>
       </div>
 
@@ -37,27 +35,47 @@
 
 
       <h3>Owners</h3>
+      <md-divider></md-divider>
+
       <ul ng-repeat="owner in vessel.owners">
         <li>{{ owner.from }} <a ng-href="?q={{owner.name}}">{{ owner.name}}</a>, <a ng-href="?q={{owner.location}}">{{ owner.location }}</a></li>
       </ul>
 
       <h3>Registrations</h3>
+      <md-divider></md-divider>
+
       <div ng-repeat="r in vessel.registrations">
         <dt>{{ r.registered }}</dt>
         <dd>{{ r.code}}</dd>
       </div>
 
       <h3>Harbours</h3>
-      <p>{{vessel.harbours.join(", ")}}.</p>
+      <md-divider></md-divider>
+
+      <div layout-padding>
+        <p>{{vessel.harbours.join(", ")}}.</p>
+      </div>
 
       <h3>Description</h3>
-      <p>{{vessel.description}}</p>
+      <md-divider></md-divider>
+
+      <div layout-padding>
+        <p>{{vessel.description}}</p>
+      </div>
 
       <h3>Sources</h3>
-      <p style="white-space: pre;">{{vessel.sources}}</p>
+      <md-divider></md-divider>
+
+      <div layout-padding>
+        <p style="white-space: pre;">{{vessel.sources}}</p>
+      </div>
 
       <h3>Caption</h3>
-      <p>{{vessel.caption}}</p>
+      <md-divider></md-divider>
+
+      <div layout-padding>
+        <p>{{vessel.caption}}</p>
+      </div>
 
     </div>
 
@@ -70,7 +88,9 @@
 
     <div ng-show="vessel._rev">
       <h3>Metadata</h3>
-      <dl>
+      <md-divider></md-divider>
+
+      <dl layout-padding>
         <dt>Edit URI (JSON)</dt>
         <dd>https:{{base}}/vessel/{{vessel.id}}?rev={{vessel._rev}}</dd>
         <dt>Author</dt>

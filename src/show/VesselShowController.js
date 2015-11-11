@@ -115,14 +115,7 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
 
   }; // end fetch
 
-
-  if ($routeParams.id === "__new") {
-    var vessel = Vessel.create();
-    $scope.vessel = vessel;
-    $scope.formula.model = vessel;
-  } else {
-    fetch();
-  }
+  fetch();
 
   $scope.show().$promise.then(data => {
     npdcAppConfig.cardTitle = data.name;

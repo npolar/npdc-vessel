@@ -10,14 +10,18 @@
 
     <div ng-if="vessel.id">
 
-      <p><a ng-href="{{'?filter-type=' + vessel.type | a }}">{{vessel.type}}</a> from <a ng-href="{{'?filter-built_where=' + vessel.built_where | a }}">{{vessel.built_where || "unkown builder"}}</a>, built in <a ng-href="?filter-built_year={{vessel.built_year}}">{{vessel.built_year || "unkown year"}}</a>.</p>
+      <div>
+        <a ng-href="?filter-type={{ vessel.type || a }}">{{vessel.type}}</a> from
+        <a ng-href="?filter-built_where={{ vessel.built_where || a }}">{{vessel.built_where || "unkown builder"}}</a>, built in
+        <a ng-href="?filter-built_year={{ vessel.built_year }}">{{vessel.built_year || "unkown year"}}</a>.
+      </div>
 
       <h3>References</h3>
       <md-divider></md-divider>
 
       <div ng-show="vessel.id" layout-padding>
-        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name}}</a> | </span></p>
-        <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{y}}</a> | </span></p>
+        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id || a }}">{{ v.name }}</a> | </span></p>
+        <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{ y }}</a> | </span></p>
       </div>
 
       <section ng-if="vessel.links.length > 0">
@@ -25,7 +29,7 @@
         <h3>History</h3>
         <p ng-bind-html="history"></p>
 
-        <p ng-if = "vessel.shipwrecked_year">{{vessel.shipwrecked_year}}: Shipwrecked. Location: {{vessel.shipwrecked_location}}.</p>
+        <p ng-if = "vessel.shipwrecked_year">{{ vessel.shipwrecked_year }}: Shipwrecked. Location: {{ vessel.shipwrecked_location }}.</p>
 
         <h3>Links</h3>
         <ul ng-repeat="link in vessel.links">
@@ -46,35 +50,35 @@
 
       <div ng-repeat="r in vessel.registrations">
         <dt>{{ r.registered }}</dt>
-        <dd>{{ r.code}}</dd>
+        <dd>{{ r.code }}</dd>
       </div>
 
       <h3>Harbours</h3>
       <md-divider></md-divider>
 
       <div layout-padding>
-        <p>{{vessel.harbours.join(", ")}}.</p>
+        <p>{{ vessel.harbours.join(", ") }}.</p>
       </div>
 
       <h3>Description</h3>
       <md-divider></md-divider>
 
       <div layout-padding>
-        <p>{{vessel.description}}</p>
+        <p>{{ vessel.description }}</p>
       </div>
 
       <h3>Sources</h3>
       <md-divider></md-divider>
 
       <div layout-padding>
-        <p style="white-space: pre;">{{vessel.sources}}</p>
+        <p style="white-space: pre;">{{ vessel.sources }}</p>
       </div>
 
       <h3>Caption</h3>
       <md-divider></md-divider>
 
       <div layout-padding>
-        <p>{{vessel.caption}}</p>
+        <p>{{ vessel.caption }}</p>
       </div>
 
     </div>
@@ -92,13 +96,13 @@
 
       <dl layout-padding>
         <dt>Edit URI (JSON)</dt>
-        <dd>https:{{base}}/vessel/{{vessel.id}}?rev={{vessel._rev}}</dd>
+        <dd>https:{{ base }}/vessel/{{ vessel.id }}?rev={{ vessel._rev }}</dd>
         <dt>Author</dt>
-        <dd>{{vessel.created_by}}</dd>
+        <dd>{{ vessel.created_by }}</dd>
         <dt>Created</dt>
-        <dd>{{vessel.created}}</dd>
+        <dd>{{ vessel.created }}</dd>
         <dt>Updated</dt>
-        <dd>{{vessel.updated}}</dd>
+        <dd>{{ vessel.updated }}</dd>
       </dl>
     </div>
 

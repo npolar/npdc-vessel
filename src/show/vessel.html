@@ -1,95 +1,87 @@
+<npdc-edit-button class="np-primary-control"></npdc-edit-button>
 
-<div ng-if="vessels" ng-repeat="vessel in vessels" layout-padding>
-  <a href="{{vessel.id|a}}">{{vessel.name}} </a> {{vessel | json}}
-</div>
+<div class="np-padding">
 
-<article ng-if="!vessels" class="content-main" layout-padding>
-
-<h2 ng-show="vessel.id">{{vessel.name}}</h2>
-<!--<npdc-edit-button></npdc-edit-button>-->
-<div>
-  <button ng-show="security.isAuthorized('update', resource.path)" type="button" ng-show="true" ng-click="editAction = !editAction; action='edit'" ng-class='{ btn: true, "btn-primary": editAction, "btn-danger": ! editAction }'>{{ editAction ? "view" : "edit" }}</button>
-  <!--<button type="button" ng-show="security.isAuthenticated()" ng-click="vessel.$update(vessel)" class="btn btn-success"><strong>save</strong></button> -->
-</div>
-
-<div ng-if="!editAction && vessel.id">
-
-  <p><a ng-href="{{'?filter-type=' + vessel.type | a }}">{{vessel.type}}</a> from <a ng-href="{{'?filter-built_where=' + vessel.built_where | a }}">{{vessel.built_where || "unkown builder"}}</a>, built in <a ng-href="?filter-built_year={{vessel.built_year}}">{{vessel.built_year || "unkown year"}}</a>.</p>
-
-  <div ng-show="vessel.id">
-    <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name }}</a> | </span></p>
+  <div ng-if="vessels" ng-repeat="vessel in vessels" >
+    <a href="{{vessel.id|a}}">{{vessel.name}} </a> {{vessel | json}}
   </div>
 
-  <div>
-    <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{y}}</a> | </span></p>
-  </div>
-  
-  <section ng-if="vessel.links.length > 0">
+  <article ng-if="!vessels" class="content-main" >
 
-  <h3>History</h3>
-  <p ng-bind-html="history"></p>
-  
-  <p ng-if = "vessel.shipwrecked_year">{{vessel.shipwrecked_year}}: Shipwrecked. Location: {{vessel.shipwrecked_location}}.</p>
-  
-  <h3>Links</h3>
-  <ul ng-repeat="link in vessel.links">
-    <li><a ng-href="{{link.href}}">{{ link.title || link.href }}</a></li>
-  </ul>
-  </section>
+    <h2 ng-show="vessel.id">{{vessel.name}}</h2>
+
+    <div ng-if="vessel.id">
+
+      <p><a ng-href="{{'?filter-type=' + vessel.type | a }}">{{vessel.type}}</a> from <a ng-href="{{'?filter-built_where=' + vessel.built_where | a }}">{{vessel.built_where || "unkown builder"}}</a>, built in <a ng-href="?filter-built_year={{vessel.built_year}}">{{vessel.built_year || "unkown year"}}</a>.</p>
+
+      <div ng-show="vessel.id">
+        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id | a }}">{{v.name}}</a> | </span></p>
+      </div>
+
+      <div>
+        <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{y}}</a> | </span></p>
+      </div>
+
+      <section ng-if="vessel.links.length > 0">
+
+        <h3>History</h3>
+        <p ng-bind-html="history"></p>
+
+        <p ng-if = "vessel.shipwrecked_year">{{vessel.shipwrecked_year}}: Shipwrecked. Location: {{vessel.shipwrecked_location}}.</p>
+
+        <h3>Links</h3>
+        <ul ng-repeat="link in vessel.links">
+          <li><a ng-href="{{link.href}}">{{ link.title || link.href }}</a></li>
+        </ul>
+      </section>
 
 
-  <h3>Owners</h3>
-  <ul ng-repeat="owner in vessel.owners">
-    <li>{{ owner.from }} <a ng-href="?q={{owner.name}}">{{ owner.name}}</a>, <a ng-href="?q={{owner.location}}">{{ owner.location }}</a></li>
-  </ul>
+      <h3>Owners</h3>
+      <ul ng-repeat="owner in vessel.owners">
+        <li>{{ owner.from }} <a ng-href="?q={{owner.name}}">{{ owner.name}}</a>, <a ng-href="?q={{owner.location}}">{{ owner.location }}</a></li>
+      </ul>
 
-  <h3>Registrations</h3>
-  <div ng-repeat="r in vessel.registrations">
-    <dt>{{ r.registered }}</dt>
-    <dd>{{ r.code}}</dd>
-  </div>
-  
-  <h3>Harbours</h3>
-  <p>{{vessel.harbours.join(", ")}}.</p>
+      <h3>Registrations</h3>
+      <div ng-repeat="r in vessel.registrations">
+        <dt>{{ r.registered }}</dt>
+        <dd>{{ r.code}}</dd>
+      </div>
 
-  <h3>Description</h3>
-  <p>{{vessel.description}}</p>
+      <h3>Harbours</h3>
+      <p>{{vessel.harbours.join(", ")}}.</p>
 
-  <h3>Sources</h3>
-  <p style="white-space: pre;">{{vessel.sources}}</p>
-  
-  <h3>Caption</h3>
-  <p>{{vessel.caption}}</p>
-    
+      <h3>Description</h3>
+      <p>{{vessel.description}}</p>
+
+      <h3>Sources</h3>
+      <p style="white-space: pre;">{{vessel.sources}}</p>
+
+      <h3>Caption</h3>
+      <p>{{vessel.caption}}</p>
+
+    </div>
+
+    <!--<div ng-show="placenames.length">
+      <h3>Placenames</h3>
+      <span ng-repeat="p in placenames">
+        <a ng-href="http://placenames.npolar.no/stadnamn/{{p.title_link}}?ident={{p.ident}}">{{p.title}}</a> |
+      </span>
+    </div>-->
+
+    <div ng-show="vessel._rev">
+      <h3>Metadata</h3>
+      <dl>
+        <dt>Edit URI (JSON)</dt>
+        <dd>https:{{base}}/vessel/{{vessel.id}}?rev={{vessel._rev}}</dd>
+        <dt>Author</dt>
+        <dd>{{vessel.created_by}}</dd>
+        <dt>Created</dt>
+        <dd>{{vessel.created}}</dd>
+        <dt>Updated</dt>
+        <dd>{{vessel.updated}}</dd>
+      </dl>
+    </div>
+
+
+  </article>
 </div>
-
-<div ng-if="editAction">
-
-  <div formula="formula"></div>
-  <npdc:save-button></npdc:save-button>
-  <npdc:delete-button></npdc:delete-button>
-</div>
-
-<!--<div ng-show="placenames.length">
-  <h3>Placenames</h3>
-  <span ng-repeat="p in placenames">
-    <a ng-href="http://placenames.npolar.no/stadnamn/{{p.title_link}}?ident={{p.ident}}">{{p.title}}</a> |
-  </span>
-</div>-->
-
-<div ng-show="vessel._rev">
-<h3>Metadata</h3>
-<dl>
-<dt>Edit URI (JSON)</dt>
-<dd>https:{{base}}/vessel/{{vessel.id}}?rev={{vessel._rev}}</dd>
-<dt>Author</dt>
-<dd>{{vessel.created_by}}</dd>
-<dt>Created</dt>
-<dd>{{vessel.created}}</dd>
-<dt>Updated</dt>
-<dd>{{vessel.updated}}</dd>
-</dl>
-</div>
-
-
-</article>

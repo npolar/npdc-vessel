@@ -1,0 +1,66 @@
+{
+  "title": null,
+  "fieldsets": [
+    {
+      "title": "Vessel",
+      "fields": [
+        "name",
+        "type"
+
+      ]
+    },
+    
+      {
+      "title": "Construction",
+      "fields": [
+        "built_where",
+        "built_year",
+        {
+          "id": "description",
+          "type": "textarea"
+        }
+      ]
+    },
+    
+    {
+      "title": "History",
+      "fields": [
+        {
+          "id": "history",
+          "type": "textarea"
+        },
+        "shipwrecked_location",
+        "shipwrecked_year"
+
+        
+      ]
+    },
+    {
+      "title": "Owners",
+      
+      "fields": [
+        "owners", "registrations"
+      ]
+    },
+    {
+      "title": "Sources",
+      "fields": [
+        {
+          "id": "sources",
+          "type": "textarea"
+        },
+        {
+          "id": "caption",
+          "type": "textarea"
+        }
+      ]
+    },
+    {
+      "title": "Links",
+      "fields": [
+        "links"
+      ]
+    }
+    
+  ]
+}

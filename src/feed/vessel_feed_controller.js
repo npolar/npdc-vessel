@@ -1,23 +1,26 @@
 "use strict";
 
-/**
- * @ngInject
- */
-var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel) {
-  
+// @ngInject
+
+var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel, npdcAppConfig) {
+
   $controller('NpolarBaseController', { $scope: $scope });
   $scope.resource = Vessel;
-  
-  let param = Object.assign({ facets: "harbours,built_where,shipwrecked_location",  "rangefacet-built_year": 50,  "rangefacet-shipwrecked_year": 50, "size-facet": 10 }, $location.search());
-  
-  if (!param.q) {
-    param.sort = "-updated";
-  }
-  
-  Vessel.feed(param, response => {
-    $scope.filters = response._filters();
-    $scope.feed = response.feed;
-   });
+  npdcAppConfig.cardTitle = 'Historic Vessels';
+
+  let defaults = { limit: 50, sort: "-updated", facets: "harbours,built_where,shipwrecked_location",  "rangefacet-built_year": 50,  "rangefacet-shipwrecked_year": 50, "size-facet": 10 };
+  let invariants = $scope.security.isAuthenticated() ? {} : {} ;
+  let query = Object.assign({}, defaults, invariants);
+
+  let search = function (q) {
+    $scope.search(Object.assign({}, query, q));
+  };
+
+  search(query);
+
+  $scope.$on('$locationChangeSuccess', (event, data) => {
+    search($location.search());
+  });
 };
 
 module.exports = VesselFeedController;

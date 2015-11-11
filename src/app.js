@@ -10,12 +10,13 @@ require('formula');
 var AutoConfig = npdcCommon.AutoConfig;
 
 // Create "vesselApp" (angular module) and declare its dependencies
-var app = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npolarUi', 'npdcUi', 'templates']);
+var vesselApp = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npolarUi', 'npdcUi', 'templates']);
 
-app.controller('VesselController', require('./document/vessel_controller'));
-app.controller('VesselFeedController', require('./feed/vessel_feed_controller'));
-app.factory('Vessel', require('./model/vessel'));
-//app.factory('Editlog', require('./model/editlog'));
+vesselApp.controller('VesselSearchController', require('./search/VesselSearchController'));
+vesselApp.controller('VesselShowController', require('./show/VesselShowController'));
+vesselApp.controller('VesselEditController', require('./edit/VesselEditController'));
+vesselApp.factory('Vessel', require('./model/vessel'));
+//vesselApp.factory('Editlog', require('./model/editlog'));
 
 // Bootstrap ngResource models using NpolarApiResource
 //
@@ -25,46 +26,35 @@ app.factory('Vessel', require('./model/vessel'));
 // * Editlog -> ngResource
 // * Placename -> ngResource
 var resources = [
-  {"path": "/vessel", "resource": "VesselResource" },
-  //{"path": "/editlog", "resource": "EditlogResource"},
-  {"path": "/placename", base: "//api.npolar.no", "resource": "Placename", fields: "*"}
+  {path: "/vessel", resource: "VesselResource" },
+  {path: "/placename", resource: "Placename", fields: "*"}
 ];
+
 resources.forEach(function (service) {
   // Expressive DI syntax is needed here
-  app.factory(service.resource, ['NpolarApiResource', function (NpolarApiResource) {
+  vesselApp.factory(service.resource, ['NpolarApiResource', function (NpolarApiResource) {
     return NpolarApiResource.resource(service);
   }]);
 });
 
 // Filters
-app.filter('a', function() {
+vesselApp.filter('a', function() {
   return function(input) {
     input = input || '';
     var out = input.replace(" ", "+");
 
-    if (app.vesselAppConfig.aFilterPrefix) {
-      out = app.vesselAppConfig.aFilterPrefix +"/"+ out;
+    if (vesselApp.vesselAppConfig.aFilterPrefix) {
+      out = vesselApp.vesselAppConfig.aFilterPrefix +"/"+ out;
     }
     return out;
   };
 });
 
 // Routing
-app.config(require('./routes'));
-
-// Directives
-// Set default textarea rows
-// app.directive("textarea", function() {
-//   return {
-//     restrict: "E",
-//     controller: function($element) {
-//       $element.attr("rows", 15);
-//     }
-//   };
-// });
+vesselApp.config(require('./router'));
 
 // Preserve newlines in text paragraphs
-app.directive("p", function() {
+vesselApp.directive("p", function() {
   return {
     restrict: "E",
     controller: function($element) {
@@ -79,9 +69,12 @@ angular.module("vesselApp").config(function($httpProvider) {
 });
 
 // Inject npolarApiConfig and run
-app.run(function(npolarApiConfig) {
+vesselApp.run(function(npolarApiConfig, npdcAppConfig) {
   var environment = "production"; // development | test | production
   var autoconfig = new AutoConfig(environment);
   angular.extend(npolarApiConfig, autoconfig);
+
+  npdcAppConfig.cardTitle = '';
+  npdcAppConfig.toolbarTitle = 'Historic vessels';
   console.log("npolarApiConfig", npolarApiConfig);
 });

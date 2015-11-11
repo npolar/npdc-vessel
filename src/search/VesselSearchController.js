@@ -2,7 +2,7 @@
 
 // @ngInject
 
-var VesselFeedController = function($controller, $scope, $location, npolarApiConfig, Vessel, npdcAppConfig) {
+var VesselSearchController = function($controller, $scope, $location, npolarApiConfig, Vessel, npdcAppConfig) {
 
   $controller('NpolarBaseController', { $scope: $scope });
   $scope.resource = Vessel;
@@ -23,4 +23,4 @@ var VesselFeedController = function($controller, $scope, $location, npolarApiCon
   });
 };
 
-module.exports = VesselFeedController;
+module.exports = VesselSearchController;

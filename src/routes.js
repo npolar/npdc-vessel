@@ -16,15 +16,16 @@ var routes = function($routeProvider, $locationProvider) {
   } else {
     vesselApp.vesselAppConfig = { aFilterPrefix: "#" };
   }
- 
+
   $routeProvider.when('/:id/:action?', {
     templateUrl: "document/vessel.html",
     controller: "VesselController"
   }).when('/', {
-    template: "<npdc:search></npdc:search>",
-    controller: "VesselFeedController"
+    template: '<npdc:search-input feed="feed"></npdc:search-input><npdc:search feed="feed"></npdc:search>',
+    controller: "VesselFeedController",
+    reloadOnSearch: false
   });
-  
+
 };
 
 module.exports = routes;

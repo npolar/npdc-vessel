@@ -19,7 +19,7 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
   search(query);
 
   $scope.$on('$locationChangeSuccess', (event, data) => {
-    search($location.search());
+    search();
   });
 };
 

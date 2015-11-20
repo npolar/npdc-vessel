@@ -9,7 +9,7 @@
     <meta name="description" content="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">
 
     <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
-		<link href="/assets/npdc-common-master-latest.css" rel="stylesheet">
+		<link href="/assets/npdc-common-<!-- @echo COMMON_VERSION -->.css" rel="stylesheet">
 
     <script>var VERSION = '<!-- @echo VERSION -->'; console.log("npdc-vessel version", VERSION)</script>
 
@@ -17,6 +17,9 @@
 
   <body>
     <npdc:app></npdc:app>
+    <!-- @if PROD -->
+    <script src="/assets/npdc-common-<!-- @echo COMMON_VERSION -->.js"></script>
+    <!-- @endif -->
     <script src="app.js"></script>
   </body>
 </html>

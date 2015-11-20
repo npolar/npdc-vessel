@@ -1,16 +1,11 @@
 "use strict";
 
 var angular = require('angular');
-
-require('angular-route');
-require('angular-npolar');
-
 var npdcCommon = require('npdc-common');
-require('formula');
 var AutoConfig = npdcCommon.AutoConfig;
 
 // Create "vesselApp" (angular module) and declare its dependencies
-var vesselApp = angular.module('vesselApp', ['ngRoute', 'formula', 'npolarApi', 'npolarUi', 'npdcUi', 'templates']);
+var vesselApp = angular.module('vesselApp', ['npdcUi']);
 
 vesselApp.controller('VesselSearchController', require('./search/VesselSearchController'));
 vesselApp.controller('VesselShowController', require('./show/VesselShowController'));

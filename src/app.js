@@ -5,7 +5,7 @@ var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
 
 // Create "vesselApp" (angular module) and declare its dependencies
-var vesselApp = angular.module('vesselApp', ['npdcUi']);
+var vesselApp = angular.module('vesselApp', ['npdcCommon']);
 
 vesselApp.controller('VesselSearchController', require('./search/VesselSearchController'));
 vesselApp.controller('VesselShowController', require('./show/VesselShowController'));

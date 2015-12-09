@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="vesselApp" ng-cloak ng-strict-di manifest="app.manifest">
-  <head>
 
+  <head>
+    <base href="/vessel/"/>
+    
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="/vessel/"/>
-    <title>Vessel Archive</title>
-    <meta name="description" content="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">
-
+    
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/assets/npdc-common-master-latest.css" rel="stylesheet">
     <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+    
 		<link href="/assets/npdc-common-<!-- @echo COMMON_VERSION -->.css" rel="stylesheet">
 
     <script>var VERSION = '<!-- @echo VERSION -->'; console.log("npdc-vessel version", VERSION)</script>
@@ -20,6 +24,24 @@
     <!-- @if PROD -->
     <script src="/assets/npdc-common-<!-- @echo COMMON_VERSION -->.js"></script>
     <!-- @endif -->
+
+
+<!--
+
+    
+    <title>Vessels</title>
+    <meta name="description" content="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">
+    
+  
+  <body>
+    <npdc:app></npdc:app>
+    <footer class="content" layout-padding>
+      <p>The <b>Vessel Archive</b> (<a href="https://data.npolar.no/dataset/fde3fd3b-55b0-4bf2-a4f6-4d673341bd03">metadata</a>) is created and maintained by <a href="mailto:
+kkjaer@online.no">Kjell-G. Kjær</a></p>
+    </footer>
+            
+-->
+
     <script src="app.js"></script>
   </body>
 </html>

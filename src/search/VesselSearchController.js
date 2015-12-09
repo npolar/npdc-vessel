@@ -21,6 +21,7 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
   $scope.$on('$locationChangeSuccess', (event, data) => {
     search();
   });
+  
 };
 
 module.exports = VesselSearchController;

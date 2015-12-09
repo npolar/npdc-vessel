@@ -64,12 +64,13 @@ angular.module("vesselApp").config(function($httpProvider) {
 });
 
 // Inject npolarApiConfig and run
+
 vesselApp.run(function(npolarApiConfig, npdcAppConfig) {
+  npdcAppConfig.cardTitle = "Kjell-G. Kjær's Historic Register of Arctic Vessels"; 
+  
   var environment = "production"; // development | test | production
   var autoconfig = new AutoConfig(environment);
   angular.extend(npolarApiConfig, autoconfig);
 
-  npdcAppConfig.cardTitle = '';
-  npdcAppConfig.toolbarTitle = 'Historic vessels';
   console.log("npolarApiConfig", npolarApiConfig);
 });

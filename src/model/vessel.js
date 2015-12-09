@@ -5,7 +5,7 @@ var _ = require('lodash');
 /**
  * @ngInject
  */
-var Vessel = function(VesselResource, NpolarApiText) {
+var Vessel = function($log, VesselResource, NpolarApiText) {
   
   var vessel = angular.extend(VesselResource, {
     
@@ -48,11 +48,12 @@ var Vessel = function(VesselResource, NpolarApiText) {
           var ships = _.map(response, function(v) {
             return { id: v.id, name: v.name.toUpperCase() };
           });
+          $log.debug('ships', ships);
           
           // Is detected SHIP NAME in search engine result?
           var ship = _.find(ships, { name: name.toUpperCase()});
           if (ship && "id" in ship) {
-            console.log(ship.id, ship.name);
+            $log.debug("detected id", ship.id, "for name", ship.name);
             id = ship.id;
           }
           

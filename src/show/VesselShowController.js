@@ -66,7 +66,7 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
       // Fetch mentions by others by searching for name
       Vessel.feed({q: vessel.name, limit: 50, facets: false, "not-id": vessel.id }, function(response) {
 
-        console.log("candidates for mentioned by:", response.feed.opensearch.totalResults);
+        console.log("Number of candidates for mentioned by:", response.feed.opensearch.totalResults);
 
         $scope.mentioned = _.select(response.feed.entries, function(v) {
           var text = v.history; //JSON.stringify(v);

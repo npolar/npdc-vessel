@@ -24,13 +24,15 @@
         <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{ y }}</a> | </span></p>
       </div>
 
-      <section ng-if="vessel.links.length > 0">
+      <section>
 
         <h3>History</h3>
         <p ng-bind-html="history"></p>
 
         <p ng-if = "vessel.shipwrecked_year">{{ vessel.shipwrecked_year }}: Shipwrecked. Location: {{ vessel.shipwrecked_location }}.</p>
-
+      </section>
+ 
+      <section ng-if="vessel.links.length > 0">
         <h3>Links</h3>
         <ul ng-repeat="link in vessel.links">
           <li><a ng-href="{{link.href}}">{{ link.title || link.href }}</a></li>

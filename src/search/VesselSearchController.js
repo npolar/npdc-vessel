@@ -8,19 +8,36 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
   $scope.resource = Vessel;
   npdcAppConfig.cardTitle = 'Historic Vessels';
 
-  let defaults = { limit: 50, sort: "-updated", facets: "harbours,built_where,shipwrecked_location",  "rangefacet-built_year": 50,  "rangefacet-shipwrecked_year": 50, "size-facet": 10 };
-  let invariants = $scope.security.isAuthenticated() ? {} : {} ;
-  let query = Object.assign({}, defaults, invariants);
-
-  let search = function (q) {
-    $scope.search(Object.assign({}, query, q));
+  let defaults = { limit: 50,
+    sort: "-updated",
+    facets: "harbours,built_where,shipwrecked_location",
+    "rangefacet-built_year": 50,
+    "rangefacet-shipwrecked_year": 50,
+    "size-facet": 10
   };
 
-  search(query);
-
+  let avatar = function(vessel) {
+    return vessel.id.slice(0,5);
+  };
+  
+  let detail = function(vessel) {
+    return vessel.type+ ' ('+ (vessel.built_year || '-') +')';
+  };
+  
+  let subtitle = function(vessel) {
+    return vessel.harbours.join(', ');
+  };
+  
+  //npdcAppConfig.search.local.results.title = 'name';
+  npdcAppConfig.search.local.results.detail = detail;
+  npdcAppConfig.search.local.results.avatar = avatar;
+  npdcAppConfig.search.local.results.subtitle = subtitle;
+  
   $scope.$on('$locationChangeSuccess', (event, data) => {
-    search();
+    $scope.search(defaults);
   });
+  
+  $scope.search(defaults);
   
 };
 

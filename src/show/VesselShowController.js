@@ -8,6 +8,7 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
 
   $controller('NpolarEditController', { $scope: $scope });
   $scope.resource = Vessel;
+  $scope.uri = window.document.location.href;
 
   let linkify = function(vessel, prop) {
 

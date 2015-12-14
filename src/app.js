@@ -13,16 +13,13 @@ vesselApp.controller('VesselEditController', require('./edit/VesselEditControlle
 vesselApp.factory('Vessel', require('./model/vessel'));
 //vesselApp.factory('Editlog', require('./model/editlog'));
 
-// Bootstrap ngResource models using NpolarApiResource
+// Bootstrap models using NpolarApiResource
 //
-// The "Vessel" model is an extended VesselResource,
-// while the other models are just plain NpolarApiResource objects
+// The "Vessel" model is an extended VesselResource
 // * Vessel -> VesselResource -> ngResource
-// * Editlog -> ngResource
-// * Placename -> ngResource
+
 var resources = [
   {path: "/vessel", resource: "VesselResource" },
-  {path: "/placename", resource: "Placename", fields: "*"}
 ];
 
 resources.forEach(function (service) {
@@ -63,14 +60,26 @@ angular.module("vesselApp").config(function($httpProvider) {
   $httpProvider.interceptors.push("npolarApiInterceptor");
 });
 
-// Inject npolarApiConfig and run
+// Inject configuration and run
 
-vesselApp.run(function(npolarApiConfig, npdcAppConfig) {
-  npdcAppConfig.cardTitle = "Kjell-G. Kjær's Historic Register of Arctic Vessels"; 
+vesselApp.run(function($http, npolarApiConfig, npdcAppConfig, NpolarTranslate, NpolarLang) {
   
-  var environment = "production"; // development | test | production
+  var environment = 'production'; // development | test | production
   var autoconfig = new AutoConfig(environment);
-  angular.extend(npolarApiConfig, autoconfig);
-
-  console.log("npolarApiConfig", npolarApiConfig);
+  Object.assign(npolarApiConfig, autoconfig);
+  
+    // i18n
+  $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-vessel&format=json&variant=array&limit=all').then(response => {
+    
+    NpolarTranslate.appendToDictionary(response.data);
+    NpolarTranslate.dictionary['npdc.app.Title'] = [
+      {'@language': 'en', '@value': 'Historic vessels'},
+      {'@language': 'no', '@value': 'Arktiske skuter'}
+    ];
+    console.debug(NpolarTranslate.dictionary);
+    
+    NpolarLang.setLanguages(['en', 'nb', 'nn']);
+  });
+  console.debug("npolarApiConfig", npolarApiConfig);
+  
 });

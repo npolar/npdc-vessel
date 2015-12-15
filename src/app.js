@@ -68,16 +68,9 @@ vesselApp.run(function($http, npolarApiConfig, npdcAppConfig, NpolarTranslate, N
   var autoconfig = new AutoConfig(environment);
   Object.assign(npolarApiConfig, autoconfig);
   
-    // i18n
+  // i18n
   $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-vessel&format=json&variant=array&limit=all').then(response => {
-    
     NpolarTranslate.appendToDictionary(response.data);
-    NpolarTranslate.dictionary['npdc.app.Title'] = [
-      {'@language': 'en', '@value': 'Historic vessels'},
-      {'@language': 'no', '@value': 'Arktiske skuter'}
-    ];
-    console.debug(NpolarTranslate.dictionary);
-    
     NpolarLang.setLanguages(['en', 'nb', 'nn']);
   });
   console.debug("npolarApiConfig", npolarApiConfig);

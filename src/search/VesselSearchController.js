@@ -6,7 +6,6 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
 
   $controller('NpolarBaseController', { $scope: $scope });
   $scope.resource = Vessel;
-  npdcAppConfig.cardTitle = 'Historic Vessels';
 
   let defaults = { limit: 50,
     sort: "-updated",
@@ -19,26 +18,26 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
   let avatar = function(vessel) {
     return vessel.id.slice(0,5);
   };
-  
+
   let detail = function(vessel) {
     return vessel.type+ ' ('+ (vessel.built_year || '-') +')';
   };
-  
+
   let subtitle = function(vessel) {
     return vessel.harbours.join(', ');
   };
-  
+
   //npdcAppConfig.search.local.results.title = 'name';
   npdcAppConfig.search.local.results.detail = detail;
   npdcAppConfig.search.local.results.avatar = avatar;
   npdcAppConfig.search.local.results.subtitle = subtitle;
-  
+
   $scope.$on('$locationChangeSuccess', (event, data) => {
     $scope.search(defaults);
   });
-  
+
   $scope.search(defaults);
-  
+
 };
 
 module.exports = VesselSearchController;

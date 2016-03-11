@@ -119,7 +119,7 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
   fetch();
 
   $scope.show().$promise.then(data => {
-    npdcAppConfig.cardTitle = data.name;
+    // npdcAppConfig.cardTitle = data.name;
   });
 
 };

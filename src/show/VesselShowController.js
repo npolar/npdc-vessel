@@ -34,7 +34,7 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
     wikiships.forEach(w => {
       let id = w[0];
       let name = w[1];
-      console.log(name);
+      //console.log(name);
       text = text.split(`\"${name}\"`).join(`<a href="${id}">${name}</a>`);
     });
 
@@ -42,14 +42,11 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
 
     mentions.forEach(m => {
       if (m.name.toUpperCase() === vessel.name.toUpperCase()) {
-
-        text = text.replace(`\"${m.name}\"`, `<b>${m.name}</b>`);
-        // Italics for all occurences of this vessel
-        text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
+        // Set current ship in bold
+        text = text.split(`\"${m.name}\"`).join(`<b>${m.name}</b>`);
       } else {
-        // Links for the first occurence of a ship, italics for the rest
-        text = text.split(`\"${m.name}\"`).join(`<a href="?q=${m.id || m.name }"><b>${m.name}</b></a>`);
-        //text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
+        // Search links for all "Vessel Name"
+        text = text.split(`\"${m.name}\"`).join(`<a href="?q=${m.id || m.name }" title="Search for ${m.name}"><b>${m.name}</b></a>`);
       }
 
     });

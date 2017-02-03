@@ -1,18 +1,21 @@
-"use strict";
+'use strict';
 
-// @ngInject
+function VesselSearchController($controller, $scope, $location,
+  npdcAppConfig, Vessel) {
+  'ngInject';
 
-var VesselSearchController = function($controller, $scope, $location, npolarApiConfig, Vessel, npdcAppConfig) {
+  let ctrl = this;
 
   $controller('NpolarBaseController', { $scope: $scope });
   $scope.resource = Vessel;
 
-  let defaults = { limit: 50,
+  ctrl.defaultQuery = { limit: 20,
     sort: "-updated",
-    facets: "harbours,built_where,shipwrecked_location",
-    "rangefacet-built_year": 50,
-    "rangefacet-shipwrecked_year": 50,
-    "size-facet": 10
+    facets: "harbours,type,built_where,shipwrecked_location,created_by,updated_by",
+    "rangefacet-built_year": 100,
+    "rangefacet-shipwrecked_year": 100,
+    fields: "id,name,type,harbours,built_where,shipwrecked_location,created,updated,created_by,updated_by",
+    "size-facet": 100
   };
 
   let avatar = function(vessel) {
@@ -20,7 +23,7 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
   };
 
   let detail = function(vessel) {
-    return vessel.type+ ' ('+ (vessel.built_year || '-') +')';
+    return vessel.type+ ' (built '+ (vessel.built_year || '?') +')';
   };
 
   let subtitle = function(vessel) {
@@ -33,11 +36,11 @@ var VesselSearchController = function($controller, $scope, $location, npolarApiC
   npdcAppConfig.search.local.results.subtitle = subtitle;
 
   $scope.$on('$locationChangeSuccess', (event, data) => {
-    $scope.search(defaults);
+    $scope.search(ctrl.defaultQuery);
   });
 
-  $scope.search(defaults);
+  $scope.search(Object.assign(ctrl.defaultQuery, $location.search()));
 
-};
+}
 
 module.exports = VesselSearchController;

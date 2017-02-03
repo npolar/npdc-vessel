@@ -10,10 +10,35 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
   $scope.resource = Vessel;
   $scope.uri = window.document.location.href;
 
+  let ctrl = this;
+
+  ctrl.wikilinks = [];
+  // matchText and m1 => whole match
+    // m2 => text [text] => <a>text</a>
+    // m3 => ?
+    // m4 => id (id1) => <a href="id1">
+    // m5 m6 ?
+    // m7 => title
+  ctrl.wikilink = function (matchText, m1, m2, m3, m4, m5, m6, m7) {
+    ctrl.wikilinks.push([m4, m2]);
+    return `<a href="${m4}" title="${m7||''}">${m2}</a>`;
+  };
+
   let linkify = function(vessel, prop) {
 
     let text = vessel[prop];
-    let mentions = Vessel.mentions(vessel[prop]);
+    // regexp from https://github.com/showdownjs/showdown/blob/master/src/subParsers/anchors.js
+    text = text.replace(/(\[((?:\[[^\]]*]|[^\[\]])*)]\([ \t]*()<?(.*?(?:\(.*?\).*?)?)>?[ \t]*((['"])(.*?)\6[ \t]*)?\))/g, ctrl.wikilink);
+
+    let wikiships = [...new Set(ctrl.wikilinks)];
+    wikiships.forEach(w => {
+      let id = w[0];
+      let name = w[1];
+      console.log(name);
+      text = text.split(`\"${name}\"`).join(`<a href="${id}">${name}</a>`);
+    });
+
+    let mentions = Vessel.mentions(text);
 
     mentions.forEach(m => {
       if (m.name.toUpperCase() === vessel.name.toUpperCase()) {
@@ -23,8 +48,8 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
         text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
       } else {
         // Links for the first occurence of a ship, italics for the rest
-        text = text.replace(`\"${m.name}\"`, `<a href="?q=${m.id || m.name }"><b>${m.name}</b></a>`);
-        text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
+        text = text.split(`\"${m.name}\"`).join(`<a href="?q=${m.id || m.name }"><b>${m.name}</b></a>`);
+        //text = text.split(`\"${m.name}\"`).join(`<i>${m.name}</i>`);
       }
 
     });
@@ -39,7 +64,7 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
     $scope.vessel = Vessel.fetch($routeParams, function(vessel) {
 
       // Inject vessel model into formula
-      $scope.formula.model = vessel;
+      //$scope.formula.setModel(vessel);
 
       // Detect ships mentioned in vessel history
       //$scope.mentions = Vessel.mentions(vessel.history);

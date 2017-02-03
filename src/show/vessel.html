@@ -11,6 +11,7 @@
 
     <div ng-if="vessel.id">
 
+      <h1>{{ vessel.name }}</h1>
       <div>
         <a ng-href="?filter-type={{ vessel.type || a }}">{{vessel.type}}</a> from
         <a ng-href="?filter-built_where={{ vessel.built_where || a }}">{{vessel.built_where || "unkown builder"}}</a>, built in
@@ -33,7 +34,7 @@
         <p ng-if = "vessel.shipwrecked_year">{{ vessel.shipwrecked_year }}: Shipwrecked. Location: {{ vessel.shipwrecked_location }}.</p>
       </section>
       <md-divider></md-divider>
- 
+
       <section ng-if="vessel.links.length > 0">
         <h3>Links</h3>
         <ul ng-repeat="link in vessel.links">
@@ -80,23 +81,8 @@
       <md-divider></md-divider>
 
     </div>
-
-    <div ng-show="vessel._rev">
-      <h3>Metadata</h3>
-      <md-divider></md-divider>
-
-      <dl layout-padding>
-        <dt>Document</dt>
-        <dd>{{ uri }}</dd>
-        <dt>Author</dt>
-        <dd>{{ vessel.created_by }}</dd>
-        <dt>Created</dt>
-        <dd>{{ vessel.created }}</dd>
-        <dt>Updated</dt>
-        <dd>{{ vessel.updated }}</dd>
-      </dl>
-    </div>
-
+    
+    <npdc:metadata document="vessel" resource="resource"></npdc:metadata>
 
   </article>
 </div>

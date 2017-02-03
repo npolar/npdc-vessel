@@ -1,23 +1,35 @@
 'use strict';
 
-// @ngInject
+function VesselEditController($scope, $controller, $location,
+  formula, formulaAutoCompleteService, fileFunnelService, NpolarApiSecurity,
+  npdcAppConfig, Vessel) {
+  'ngInject';
 
-var VesselEditController = function ($scope, $controller, $routeParams, Vessel) {
+  let ctrl = this;
 
-  // EditController -> NpolarEditController
-  $controller('NpolarEditController', { $scope: $scope });
+  ctrl.init = () => {
+    $controller('NpolarEditController', { $scope: $scope });
+    $scope.resource = Vessel;
 
-  // Expedition -> npolarApiResource -> ngResource
-  $scope.resource = Vessel;
+    $scope.formula = formula.getInstance({
+      schema: '//api.npolar.no/schema/vessel-1',
+      form: 'edit/formula.json',
+      //language: 'edit/translation.json',
+      templates: npdcAppConfig.formula.templates,
+      languages: npdcAppConfig.formula.languages
+    });
 
-  // Formula ($scope.formula is set by parent)
-  $scope.formula.schema = '//api.npolar.no/schema/vessel-1';
-  $scope.formula.form = 'edit/formula.json';
-  $scope.formula.template = 'material';
+    let autocomplete = ['harbours', 'type', 'links.type', 'shipwrecked_location', 'built_where', 'owners.name', 'owners.from', 'owners.location'];
+    formulaAutoCompleteService.autocompleteFacets(autocomplete, $scope.resource, $scope.formula);
+  };
+
+  if (!$scope.formula) {
+    ctrl.init();
+  }
 
   // edit (or new) action
   $scope.edit();
 
-};
+}
 
 module.exports = VesselEditController;

@@ -5,41 +5,30 @@
       "title": "Vessel",
       "fields": [
         "name",
-        "type"
-
-      ]
-    },
-    
-      {
-      "title": "Construction",
-      "fields": [
+        "type",
         "built_where",
         "built_year",
-        {
-          "id": "description",
-          "type": "textarea"
-        }
+        "shipwrecked_location",
+        "shipwrecked_year",
+        { "id": "description", "type": "textarea" },
+        "registrations"
       ]
     },
-    
     {
-      "title": "History",
+      "title": "Text",
       "fields": [
         {
           "id": "history",
           "type": "textarea"
-        },
-        "shipwrecked_location",
-        "shipwrecked_year"
-
-        
+        }
       ]
     },
     {
-      "title": "Owners",
-      
+      "title": "Harbours & owners",
+
       "fields": [
-        "owners", "registrations"
+         "harbours",
+        "owners"
       ]
     },
     {
@@ -61,6 +50,6 @@
         "links"
       ]
     }
-    
+
   ]
 }

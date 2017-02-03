@@ -11,7 +11,6 @@ vesselApp.controller('VesselSearchController', require('./search/VesselSearchCon
 vesselApp.controller('VesselShowController', require('./show/VesselShowController'));
 vesselApp.controller('VesselEditController', require('./edit/VesselEditController'));
 vesselApp.factory('Vessel', require('./model/vessel'));
-//vesselApp.factory('Editlog', require('./model/editlog'));
 
 // Bootstrap models using NpolarApiResource
 //
@@ -61,18 +60,17 @@ angular.module("vesselApp").config(function($httpProvider) {
 });
 
 // Inject configuration and run
-
 vesselApp.run(function($http, npolarApiConfig, npdcAppConfig, NpolarTranslate, NpolarLang) {
-  
+
   var environment = 'production'; // development | test | production
   var autoconfig = new AutoConfig(environment);
   Object.assign(npolarApiConfig, autoconfig);
-  
+
   // i18n
   $http.get('//api.npolar.no/text/?q=&filter-bundle=npolar|npdc|npdc-vessel&format=json&variant=array&limit=all').then(response => {
     NpolarTranslate.appendToDictionary(response.data);
     NpolarLang.setLanguages(['en', 'nb', 'nn']);
   });
   console.debug("npolarApiConfig", npolarApiConfig);
-  
+
 });

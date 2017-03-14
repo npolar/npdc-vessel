@@ -9,22 +9,29 @@
 
   <article ng-if="!vessels">
 
-    <div ng-if="vessel.id">
+    <div ng-if="vessel && vessel.id && vessel.name">
 
-      <h1>{{ vessel.name }}</h1>
-      <div>
-        <a ng-href="?filter-type={{ vessel.type || a }}">{{vessel.type}}</a> from
-        <a ng-href="?filter-built_where={{ vessel.built_where || a }}">{{vessel.built_where || "unkown builder"}}</a>, built in
-        <a ng-href="?filter-built_year={{ vessel.built_year }}">{{vessel.built_year || "unkown year"}}</a>.
-      </div>
+      <section>
+        <h1>{{ vessel.name }}</h1>
+        <div>
+          <a ng-href="?filter-type={{ vessel.type || a }}">{{vessel.type}}</a> from
+          <a ng-href="?filter-built_where={{ vessel.built_where || a }}">{{vessel.built_where || "unkown builder"}}</a>, built in
+          <a ng-href="?filter-built_year={{ vessel.built_year }}">{{vessel.built_year || "unkown year"}}</a>.
+        </div>
+      </section>
+
+      <section ng-if="vessel.images">
+        <span ng-repeat="img in vessel.images">
+          <a ng-href="{{img.href}}" ng-init="attr = img.title +' ('+ img.attribution+')'"><img ng-src="{{img.href}}"
+            width="400" alt="{{attr}}" title="{{attr}}" />
+          </a>
+        </span>
+      </section>
 
       <!--<h3>References</h3>
       <md-divider></md-divider>-->
 
-      <div ng-show="vessel.id" layout-padding>
-        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id || a }}">{{ v.name }}</a> | </span></p>
-        <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{ y }}</a> | </span></p>
-      </div>
+
 
       <section>
 
@@ -80,9 +87,13 @@
       </div>
       <md-divider></md-divider>
 
-    </div>
-    
+       <div ng-show="vessel.id" layout-padding>
+        <p>Mentioned by: <span ng-repeat="v in mentioned"><a ng-href="{{v.id || a }}">{{ v.name }}</a> | </span></p>
+        <p>Years: <span ng-repeat="y in years"><a ng-href="?q={{y}}">{{ y }}</a> | </span></p>
+      </div>
+
     <npdc:metadata document="vessel" resource="resource"></npdc:metadata>
+    </div>
 
   </article>
 </div>

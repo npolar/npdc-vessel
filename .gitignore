@@ -2,4 +2,6 @@ node_modules
 .tags
 dist
 coverage
-
+TODO.md
+src/edit/vessel-1.json
+docs

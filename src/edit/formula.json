@@ -5,30 +5,31 @@
       "title": "Vessel",
       "fields": [
         "name",
-        "type",
-        "built_where",
-        "built_year",
-        "shipwrecked_location",
-        "shipwrecked_year",
-        { "id": "description", "type": "textarea" },
-        "registrations"
+        "type"
       ]
     },
     {
-      "title": "Text",
+      "title": "Misc.",
+
+      "fields": [
+                "built_where",
+        "built_year",
+        "shipwrecked_location",
+        "shipwrecked_year",
+         { "id": "description", "type": "textarea" },
+         "harbours",
+         "registrations",
+        "owners"
+
+      ]
+    },
+    {
+      "title": "History",
       "fields": [
         {
           "id": "history",
           "type": "textarea"
         }
-      ]
-    },
-    {
-      "title": "Harbours & owners",
-
-      "fields": [
-         "harbours",
-        "owners"
       ]
     },
     {
@@ -44,12 +45,27 @@
         }
       ]
     },
+
+    {
+      "title": "Files",
+      "fields": [
+        "files"
+      ]
+    },
     {
       "title": "Links",
       "fields": [
         "links"
       ]
+    },
+
+    {
+      "title": "Images",
+      "fields": [
+        "images"
+      ]
     }
+
 
   ]
 }

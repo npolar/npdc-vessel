@@ -25,8 +25,12 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
   };
 
   let linkify = function(vessel, prop) {
+    if (!vessel || !vessel[prop]) {
+      return;
+    }
 
     let text = vessel[prop];
+
     // regexp from https://github.com/showdownjs/showdown/blob/master/src/subParsers/anchors.js
     text = text.replace(/(\[((?:\[[^\]]*]|[^\[\]])*)]\([ \t]*()<?(.*?(?:\(.*?\).*?)?)>?[ \t]*((['"])(.*?)\6[ \t]*)?\))/g, ctrl.wikilink);
 
@@ -50,7 +54,6 @@ var VesselShowController = function($controller, $rootScope, $scope, $route, $ro
       }
 
     });
-
     return text;
   };
 

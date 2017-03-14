@@ -62,7 +62,7 @@ angular.module("vesselApp").config(function($httpProvider) {
 // Inject configuration and run
 vesselApp.run(function($http, npolarApiConfig, npdcAppConfig, NpolarTranslate, NpolarLang) {
 
-  var environment = 'production'; // development | test | production
+  var environment = 'test'; // development | test | production
   var autoconfig = new AutoConfig(environment);
   Object.assign(npolarApiConfig, autoconfig);
 

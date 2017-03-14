@@ -10,7 +10,7 @@ function VesselSearchController($controller, $scope, $location,
   $scope.resource = Vessel;
 
   ctrl.defaultQuery = { limit: 20,
-    sort: "-updated",
+    //sort: "-updated",
     facets: "harbours,type,built_where,shipwrecked_location,created_by,updated_by",
     "rangefacet-built_year": 100,
     "rangefacet-shipwrecked_year": 100,
@@ -27,7 +27,7 @@ function VesselSearchController($controller, $scope, $location,
   };
 
   let subtitle = function(vessel) {
-    return vessel.harbours.join(', ');
+    return ''; //vessel.harbours.join(', ');
   };
 
   //npdcAppConfig.search.local.results.title = 'name';

@@ -1,6 +1,6 @@
 {
   "name": "npdc-vessel",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "NPDC Historic Vessel Archive",
   "main": "gulpfile.js",
   "scripts": {

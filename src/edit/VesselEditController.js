@@ -62,17 +62,6 @@ function VesselEditController($scope, $controller, $location, $http,
       });
     };
 
-    //self.setHashiFiles = (hF) => {
-    //  self.hashi = hF;
-    //}
-    //
-    //self.filenameFromHashiId = (id) => {
-    //  let f = self.hashi.find(h => h.id === id);
-    //  if (f) {
-    //    return f.filename;
-    //  }
-    //}
-
     self.injectImagesFromFiles = (imagesNotReferenced) => {
       let v = $scope.formula.getModel();
 
@@ -131,8 +120,6 @@ function VesselEditController($scope, $controller, $location, $http,
     if (!(/new/).test($location.path())) {
       $scope.$on('npdc-filefunnel-upload-completed', (event, yetAnotherFileListFormat) => {
         $http.get(self.fileUri).then(self.injectFileAndImageMetadata);
-        //$scope.formula.save();
-        //$location.path('');
       });
     }
   };

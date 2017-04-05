@@ -45,24 +45,16 @@
         }
       ]
     },
-
-    {
-      "title": "Files",
-      "fields": [
-        "files"
-      ]
-    },
-    {
+{
       "title": "Links",
       "fields": [
         "links"
       ]
     },
-
     {
-      "title": "Images",
+      "title": "Files & images",
       "fields": [
-        "images"
+        "files", "images"
       ]
     }
 

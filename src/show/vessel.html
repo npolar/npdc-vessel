@@ -22,10 +22,13 @@
 
       <section ng-if="vessel.images">
         <span ng-repeat="img in vessel.images">
-          <a ng-href="{{img.href}}" ng-init="attr = img.title +' ('+ img.attribution+')'"><img ng-src="{{img.href}}"
-            width="400" alt="{{attr}}" title="{{attr}}" />
+          <figure><a ng-href="{{img.href}}" ng-init="attr = img.title +' ('+ img.attribution+')'"><img ng-src="{{img.href}}"
+            width="50%" alt="{{attr}}" title="{{attr}}" />
           </a>
+          <br/><figcaption>{{attr}}</figcaption>
+          </figure>
         </span>
+        <span></span>
       </section>
 
       <!--<h3>References</h3>

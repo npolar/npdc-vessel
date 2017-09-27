@@ -11,8 +11,8 @@ function VesselEditController($scope, $controller, $location, $http,
 
     self.initFormula = () => {
       $scope.formula = formula.getInstance({
-      //schema: '//api.npolar.no/schema/vessel-1',
-      schema: 'edit/vessel-1.json',
+      schema: '//api.npolar.no/schema/vessel-1',
+      //schema: 'edit/vessel-1.json',
       form: 'edit/formula.json',
       //language: 'edit/translation.json',
       templates: npdcAppConfig.formula.templates,
